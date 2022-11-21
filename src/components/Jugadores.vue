@@ -3,7 +3,7 @@
   <section class="src-components-jugadores">
     <h1>Jugadores</h1>
     <div class="col-12 ">
-      <button class="btn btn-success float-right" @click="sortearGanadores()">Sortear ganadores</button>
+      <button class="btn btn-success float-right" @click="sortearGanadores()" :disabled="data.length === 0">Sortear ganadores</button>
     </div>
     <br>
     <br>
@@ -41,7 +41,7 @@
     },
     data () {
       return {
-        data: null,
+        data: [],
         API_URL_JUGADORES: "https://6366f216f5f549f052ce96e7.mockapi.io/TP_PNT2_ORT/jugadores",
         API_URL_GANADORES: "https://6366f216f5f549f052ce96e7.mockapi.io/TP_PNT2_ORT/ganadores",
         CANT_GANADORES: 3, 
