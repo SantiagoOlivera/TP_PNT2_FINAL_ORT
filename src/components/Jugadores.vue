@@ -3,7 +3,7 @@
   <section class="src-components-jugadores">
     <h1>Jugadores</h1>
     <div class="col-12 ">
-      <button class="btn btn-success float-right" @click="sortearGanadores()" :disabled="data.length === 0">Sortear ganadores</button>
+      <button class="btn btn-success float-right" @click="sortearGanadores()" :disabled="data.length < CANT_GANADORES">Sortear ganadores</button>
     </div>
     <br>
     <br>
