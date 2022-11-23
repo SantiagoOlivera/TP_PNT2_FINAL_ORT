@@ -9,7 +9,7 @@
     <br>
     <table v-if="data" class="table">
       <thead>
-        <tr>
+        <tr class="tableFixedHeader">
           <th scope="col">ID</th>
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
@@ -99,5 +99,12 @@
 <style scoped >
   .src-components-jugadores {
 
+  }
+  .tableFixedHeader{
+    position: sticky; 
+    top: 0; 
+    z-index: 1; 
+    background:white; 
+    outline: 2px solid rgba(128, 128, 128, 0.356);
   }
 </style>
