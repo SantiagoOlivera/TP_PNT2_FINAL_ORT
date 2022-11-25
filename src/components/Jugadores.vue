@@ -3,7 +3,18 @@
   <section class="src-components-jugadores">
     <h1>Jugadores</h1>
     <div class="col-12 ">
-      <button class="btn btn-success float-right" @click="sortearGanadores()" :disabled="data.length < CANT_GANADORES">Sortear ganadores</button>
+      <button 
+        class="btn btn-success float-right m-1" 
+        @click="sortearGanadores()" 
+        :disabled="data.length < CANT_GANADORES || this.ganadores.length > 0">
+        Sortear ganadores
+      </button>
+      
+      <button 
+        class="btn btn-secondary float-right m-1" :disabled="this.ganadores.length === 0" 
+        @click="volverASortear()">
+        Volver a sorter
+      </button>
     </div>
     <br>
     <br>
@@ -15,15 +26,19 @@
           <th scope="col">Apellido</th>
           <th scope="col">Email</th>
           <th scope="col">DNI</th>
+          <th scope="col">Quitar jugador</th>
         </tr>
       </thead>
       <tbody>
-          <tr v-for="(item, index) in data" :key=index>
+          <tr v-for="(item, index) in data" :key=index :style="getStyleGanador(item.id)">
             <td>{{item.id}}</td>
             <td>{{item.nombre}}</td>
             <td>{{item.apellido}}</td>
             <td>{{item.email}}</td>
             <td>{{item.dni}}</td>
+            <td>
+              <button class="btn btn-danger" @click="quitarJugador(item.id)">X</button>
+            </td>
           </tr>
       </tbody>
     </table>
@@ -49,10 +64,23 @@
       }
     },
     methods: {
+      habilitaSorteo(){
+        var ret = false;
+        if(this.ganadores > 0 ){
+          ret = true;
+        }
+        return ret;
+      },
+      volverASortear(){
+        console.log("Volver a sortear")
+        this.ganadores = [];
+      },
       sortearGanadores(){
+        
         var ganadores = [];
         var j = null;
         var idx = null;
+
         for(var i=0; i<this.CANT_GANADORES; i++){
           idx = this.random(0, this.data.length);
           j = this.data[idx];
@@ -71,6 +99,7 @@
 
         this.guardarGanadores();
 
+
       },
       random(min, max){
         return min + ( Math.floor(Math.random() * (max - min + 1)) );
@@ -86,6 +115,25 @@
           jugadores: this.ganadores
         }).then(res => { console.log(res) })
           .catch(error => console.log(error)); 
+      },
+      quitarJugador(id){
+        this.axios.delete(this.API_URL_JUGADORES + `/${id}`)
+          .then(()=>{ 
+            this.getJugadores(); 
+          }).catch(error => console.log(error));
+      },
+      getStyleGanador(id){
+        
+        var style = ''; 
+        var isGanador = this.ganadores.find((e)=>{ return e.id === id });
+        console.log("GetStyleGandor", isGanador);
+        if(isGanador){
+          console.log(isGanador);
+          style = "background: var(--success)";
+        }
+
+        return style;
+
       }
     },
     computed: {

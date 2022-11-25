@@ -14,6 +14,9 @@
           <li class="nav-item active">
             <router-link class="nav-link" to="ganadores">Ganadores</router-link>
           </li>
+          <li class="nav-item active">
+            <router-link class="nav-link" to="formulario-jugadores">Agregar jugador</router-link>
+          </li>
         </ul>
       </div>
     </nav>

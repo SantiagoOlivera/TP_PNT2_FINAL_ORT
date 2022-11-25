@@ -6,11 +6,11 @@
     <label for="">Seleccionar Id sorteo</label>
     <div class="input-group mb-3 p-2 w-50 m-auto">
       <!-- <input type="text" class="form-control" placeholder="ID Sorteo" v-model="idSorteo"> -->
-      <select name="" id="" class="form-control" v-model="idSorteo">
+      <select name="" id="" class="form-control" v-model="idSorteo" :disabled="deshabilitaBusqueda()">
         <option v-for="(item, index) in sorteos" :key="index">{{item.id}}</option>
       </select>
       <div class="input-group-append">
-        <button class="btn btn-success" type="button" @click="getGanadores()">Ver sorteo</button>
+        <button class="btn btn-success" type="button" @click="getGanadores()" :disabled="deshabilitaBusqueda()">Ver sorteo</button>
       </div>
     </div>
     <br>
@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-4" v-for="(item, index) in data" :key="index">
           <div class="card">
-            <img class="card-img-top" src="item.img" alt="">
+            <!-- <img class="card-img-top" src="item.img" alt=""> -->
             <div class="card-body">
               <h5 class="card-title">{{ (index+1) + ' - ' + item.nombre + ' ' + item.apellido }}</h5>
               <p class="card-text">DNI: {{ item.dni }}</p>
@@ -62,6 +62,15 @@
         this.axios(this.API_URL_GANADORES + `/${this.idSorteo}`)
           .then(res => { this.data = res.data.jugadores; })
           .catch(error => console.log(error));
+      },
+      deshabilitaBusqueda(){
+        var ret = true;
+        if(this.sorteos){
+          if(this.sorteos.length > 0){
+            ret = false;
+          }
+        }
+        return ret;
       }
     },
     computed: {

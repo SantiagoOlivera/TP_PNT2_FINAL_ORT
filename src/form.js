@@ -6,7 +6,14 @@ let options = {
         /* 'max-length-nombre': function(value){
             return value.toString().length < 15
         } */
-        
+        'is-numerico': function(numero){
+            var rta = false;
+            console.log(!isNaN(numero));
+            if(!isNaN(numero)){
+                rta = true;
+            }
+            return rta;
+        }
         
     }
 }
